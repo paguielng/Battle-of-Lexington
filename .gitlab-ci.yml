@@ -1,0 +1,18 @@
+image: ruby:3.1
+
+stages:
+  - deploy
+
+pages:
+  stage: deploy
+  script:
+    - apt-get update -y
+    - apt-get install -y build-essential libssl-dev libreadline-dev zlib1g-dev
+    - gem install bundler  # Installe bundler avant d'exécuter bundle install
+    - bundle install       # Utilise Bundler pour installer les dépendances définies dans le Gemfile
+    - jekyll build -d public  # Génère le site Jekyll dans le dossier public
+  artifacts:
+    paths:
+      - public  # Spécifie que le dossier public doit être déployé
+  only:
+    - main
